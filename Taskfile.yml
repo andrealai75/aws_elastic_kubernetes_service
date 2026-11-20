@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: '3'
+
+tasks:
+  apply:
+    desc: Call all the apply sub-tasks in the correct order
+    cmds:
+      - cd terraform_s3_state && task apply
+    silent: true
