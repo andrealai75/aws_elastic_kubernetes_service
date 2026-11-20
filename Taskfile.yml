@@ -6,4 +6,5 @@ tasks:
     desc: Call all the apply sub-tasks in the correct order
     cmds:
       - cd terraform_s3_state && task apply
+      - cd network && task apply
     silent: true
