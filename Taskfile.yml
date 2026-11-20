@@ -8,3 +8,9 @@ tasks:
       - cd terraform_s3_state && task apply
       - cd network && task apply
     silent: true
+
+  destroy:
+    desc: Call all the destroy sub-tasks in the correct order
+    cmds:
+      - cd network && task destroy
+    silent: true
