@@ -44,7 +44,8 @@ tasks:
     cmds:
       - |
         cd infrastructure && terraform plan \
-          -var="aws_region={{.aws_region}}"
+          -var="aws_region={{.aws_region}}" \
+          -var="project={{.repository_name}}"
     silent: true
 
   apply:
@@ -54,7 +55,8 @@ tasks:
     cmds:
        - |
         cd infrastructure && terraform apply \
-          -var="aws_region={{.aws_region}}"
+          -var="aws_region={{.aws_region}}" \
+          -var="project={{.repository_name}}"
     silent: true
 
   destroy:
@@ -64,8 +66,21 @@ tasks:
     cmds:
       - |
         cd infrastructure && terraform plan -destroy \
-          -var="aws_region={{.aws_region}}"
+          -var="aws_region={{.aws_region}}" \
+          -var="project={{.repository_name}}"
       - |    
         cd infrastructure && terraform apply -destroy \
-          -var="aws_region={{.aws_region}}"
+          -var="aws_region={{.aws_region}}" \
+          -var="project={{.repository_name}}"
+    silent: true
+
+  console:
+    desc: Start an interactive Terraform session
+    deps:
+      - init
+    cmds:
+       - |
+        cd infrastructure && terraform console \
+          -var="aws_region={{.aws_region}}" \
+          -var="project={{.repository_name}}"
     silent: true
