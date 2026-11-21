@@ -4,7 +4,7 @@ resource "aws_eip" "nat" {
 
 resource "aws_nat_gateway" "main" {
   allocation_id = aws_eip.nat.id
-  subnet_id     = aws_subnet.public_a.id
+  subnet_id     = aws_subnet.publics[0].id
 
   depends_on = [aws_internet_gateway.main]
 }
@@ -18,12 +18,8 @@ resource "aws_route_table" "private" {
   }
 }
 
-resource "aws_route_table_association" "private_a" {
-  subnet_id      = aws_subnet.private_a.id
-  route_table_id = aws_route_table.private.id
-}
-
-resource "aws_route_table_association" "private_b" {
-  subnet_id      = aws_subnet.private_b.id
+resource "aws_route_table_association" "privates" {
+  count          = 2
+  subnet_id      = aws_subnet.privates[count.index].id
   route_table_id = aws_route_table.private.id
 }

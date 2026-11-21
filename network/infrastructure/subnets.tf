@@ -1,45 +1,24 @@
-resource "aws_subnet" "public_a" {
+resource "aws_subnet" "publics" {
+  count                   = 2
   vpc_id                  = aws_vpc.main.id
-  cidr_block              = cidrsubnet(local.vpc_cidr, 2, 0)
-  availability_zone       = local.azs[0]
+  cidr_block              = cidrsubnet(local.vpc_cidr, 2, count.index)
+  availability_zone       = local.azs[count.index]
   map_public_ip_on_launch = true
 
   tags = {
-    Name                     = "${local.project}-public-a"
+    Name                     = "${local.project}-public-${local.azs[count.index]}"
     "kubernetes.io/role/elb" = "1"
   }
 }
 
-resource "aws_subnet" "public_b" {
-  vpc_id                  = aws_vpc.main.id
-  cidr_block              = cidrsubnet(local.vpc_cidr, 2, 1)
-  availability_zone       = local.azs[1]
-  map_public_ip_on_launch = true
-
-  tags = {
-    Name                     = "${local.project}-public-b"
-    "kubernetes.io/role/elb" = "1"
-  }
-}
-
-resource "aws_subnet" "private_a" {
+resource "aws_subnet" "privates" {
+  count             = 2
   vpc_id            = aws_vpc.main.id
-  cidr_block        = cidrsubnet(local.vpc_cidr, 2, 2)
+  cidr_block        = cidrsubnet(local.vpc_cidr, 2, count.index + 2)
   availability_zone = local.azs[0]
 
   tags = {
-    Name                              = "${local.project}-private-a"
-    "kubernetes.io/role/internal-elb" = "1"
-  }
-}
-
-resource "aws_subnet" "private_b" {
-  vpc_id            = aws_vpc.main.id
-  cidr_block        = cidrsubnet(local.vpc_cidr, 2, 3)
-  availability_zone = local.azs[1]
-
-  tags = {
-    Name                              = "${local.project}-private-b"
+    Name                              = "${local.project}-private-${local.azs[count.index]}"
     "kubernetes.io/role/internal-elb" = "1"
   }
 }
