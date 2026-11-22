@@ -14,3 +14,12 @@ resource "aws_iam_role" "control_plane" {
     ]
   })
 }
+
+data "aws_iam_policy" "amazon_eks_cluster" {
+  name = "AmazonEKSClusterPolicy"
+}
+
+resource "aws_iam_role_policy_attachment" "amazon_eks_cluster" {
+  role       = aws_iam_role.control_plane.name
+  policy_arn = data.aws_iam_policy.amazon_eks_cluster.arn
+}
