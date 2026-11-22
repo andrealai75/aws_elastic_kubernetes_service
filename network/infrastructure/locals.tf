@@ -1,9 +1,9 @@
 locals {
-  vpc_cidr = "10.0.0.0/16"
-  azs      = slice(data.aws_availability_zones.available.names, 0, 2)
-  project  = "eks"
+  vpc_cidr     = "10.0.0.0/16"
+  azs          = slice(data.aws_availability_zones.available.names, 0, 2)
+  cluster_name = "eks"
   tags = {
-    Name       = local.project
+    Name       = local.cluster_name
     Repository = var.project
     ManagedBy  = "Terraform"
   }

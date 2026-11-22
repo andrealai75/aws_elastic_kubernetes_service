@@ -6,7 +6,7 @@ resource "aws_subnet" "publics" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name                     = "${local.project}-public-${local.azs[count.index]}"
+    Name                     = "${local.cluster_name}-public-${local.azs[count.index]}"
     "kubernetes.io/role/elb" = "1"
   }
 }
@@ -18,7 +18,7 @@ resource "aws_subnet" "privates" {
   availability_zone = local.azs[0]
 
   tags = {
-    Name                              = "${local.project}-private-${local.azs[count.index]}"
+    Name                              = "${local.cluster_name}-private-${local.azs[count.index]}"
     "kubernetes.io/role/internal-elb" = "1"
   }
 }
