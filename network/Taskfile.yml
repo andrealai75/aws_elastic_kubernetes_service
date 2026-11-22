@@ -54,7 +54,7 @@ tasks:
       - init
     cmds:
        - |
-        cd infrastructure && terraform apply \
+        cd infrastructure && terraform apply -auto-approve \
           -var="aws_region={{.aws_region}}" \
           -var="project={{.repository_name}}"
     silent: true
@@ -69,7 +69,7 @@ tasks:
           -var="aws_region={{.aws_region}}" \
           -var="project={{.repository_name}}"
       - |    
-        cd infrastructure && terraform apply -destroy \
+        cd infrastructure && terraform apply -destroy -auto-approve \
           -var="aws_region={{.aws_region}}" \
           -var="project={{.repository_name}}"
     silent: true
