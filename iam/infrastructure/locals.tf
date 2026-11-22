@@ -6,4 +6,10 @@ locals {
     Repository  = var.project
     ManagedBy   = "Terraform"
   }
+
+  node_role_policies = [
+    "AmazonEKSWorkerNodePolicy",
+    "AmazonEKS_CNI_Policy",
+    "AmazonEC2ContainerRegistryPullOnly"
+  ]
 }
