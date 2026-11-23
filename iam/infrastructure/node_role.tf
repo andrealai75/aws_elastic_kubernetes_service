@@ -22,6 +22,6 @@ data "aws_iam_policy" "node_policies" {
 
 resource "aws_iam_role_policy_attachment" "node_policies" {
   for_each   = toset(local.node_role_policies)
-  role       = aws_iam_role.control_plane.name
+  role       = aws_iam_role.node.name
   policy_arn = data.aws_iam_policy.node_policies[each.key].arn
 }
