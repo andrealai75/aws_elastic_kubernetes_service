@@ -8,6 +8,7 @@ resource "aws_subnet" "publics" {
   tags = {
     Name                     = "${local.cluster_name}-public-${local.azs[count.index]}"
     "kubernetes.io/role/elb" = "1"
+    Type                     = "public"
   }
 }
 
@@ -20,5 +21,6 @@ resource "aws_subnet" "privates" {
   tags = {
     Name                              = "${local.cluster_name}-private-${local.azs[count.index]}"
     "kubernetes.io/role/internal-elb" = "1"
+    Type                              = "private"
   }
 }

@@ -2,7 +2,7 @@ resource "aws_eks_cluster" "main" {
   name = local.cluster_name
 
   access_config {
-    authentication_mode = "API"
+    authentication_mode                         = "API"
     bootstrap_cluster_creator_admin_permissions = true
   }
 
@@ -16,7 +16,7 @@ resource "aws_eks_cluster" "main" {
   }
 
   vpc_config {
-    subnet_ids = data.aws_subnets.all[*].id
+    subnet_ids = data.aws_subnets.all.ids
 
     endpoint_private_access = true
     endpoint_public_access  = true
