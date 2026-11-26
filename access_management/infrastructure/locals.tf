@@ -7,4 +7,5 @@ locals {
     Repository  = var.project
     ManagedBy   = "Terraform"
   }
+  roles = [ "developer", "admin" ]
 }
