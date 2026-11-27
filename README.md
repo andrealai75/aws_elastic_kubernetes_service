@@ -58,6 +58,12 @@ kubectl get nodes
 
 The access stack also outputs kubeconfig commands for the configured IAM access roles. Use the appropriate AWS CLI profile and assume-role setup for a role before connecting as that identity.
 
+### PaymentsDeveloper Kubernetes RBAC
+
+The `PaymentsDeveloper` IAM role has an EKS access entry that maps it to the Kubernetes group `payments-team`. It has no EKS access policy association; Kubernetes permissions for this group are granted by a Kubernetes `RoleBinding` defined in the [GitOps configuration repository](https://github.com/andrealai75/aws_eks_gitops_config_argocd), and are reconciled by Argo CD. Update that repository's RoleBinding to change the group's Kubernetes permissions.
+
+This is separate from AWS IAM permissions: the `PaymentsDeveloper` role is attached to the AWS-managed `ReadOnlyAccess` IAM policy. That policy grants read-only AWS API access; it does not grant Kubernetes permissions.
+
 ## GitOps
 
 Terraform only installs and configures the Argo CD bootstrap layer. Workloads and namespace configuration are sourced from the external GitOps repository linked above. Argo CD reconciles that source automatically, including pruning resources removed from Git and self-healing drift.
