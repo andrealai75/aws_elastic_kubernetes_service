@@ -10,7 +10,7 @@ locals {
   roles = {
     "PaymentsDeveloper" = {
       cluster_policies_arns  = []
-      kubernetes_groups = ["PaymentsDeveloper"]
+      kubernetes_groups = ["payments-team"]
     }
     "SecurityAuditor" = {
       cluster_policies_arns = ["arn:aws:eks::aws:cluster-access-policy/AmazonEKSViewPolicy"]
@@ -25,12 +25,13 @@ locals {
       kubernetes_groups     = []
     }
   }
-  policy_associations = flatten([
-    for name, config in local.roles : [
-      for policy in config.cluster_policies_arns : {
+  policy_associations = merge([
+    for name, config in local.roles : {
+      for policy in config.cluster_policies_arns :
+      "${name}:${policy}" => {
         role_arn   = aws_iam_role.all[name].arn
         policy_arn = policy
       }
-    ]
-  ])
+    }
+  ]...)
 }
