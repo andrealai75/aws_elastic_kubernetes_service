@@ -1,4 +1,4 @@
-# AWS EKS GitOps Portfolio
+# AWS EKS GitOps
 
 This repository demonstrates an end-to-end, repeatable deployment of an Amazon EKS cluster. Terraform provisions the AWS infrastructure and access configuration, then installs Argo CD with Helm and connects it to a GitOps configuration repository.
 
