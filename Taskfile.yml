@@ -9,11 +9,15 @@ tasks:
       - cd network && task apply
       - cd iam && task apply
       - cd eks && task apply
+      - cd access && task apply
+      - cd bootstrap && task apply
     silent: true
 
   destroy:
     desc: Call all the destroy sub-tasks in the correct order
     cmds:
+      - cd bootstrap && task destroy
+      - cd access && task destroy
       - cd eks && task destroy
       - cd iam && task destroy
       - cd network && task destroy
