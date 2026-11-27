@@ -1,16 +1,18 @@
 locals {
   cluster_name = "eks"
   account_id   = data.aws_caller_identity.current.account_id
+
   tags = {
     Name        = local.cluster_name
     ClusterName = local.cluster_name
     Repository  = var.project
     ManagedBy   = "Terraform"
   }
+
   roles = {
     "PaymentsDeveloper" = {
-      cluster_policies_arns  = []
-      kubernetes_groups = ["payments-team"]
+      cluster_policies_arns = []
+      kubernetes_groups     = ["payments-team"]
     }
     "SecurityAuditor" = {
       cluster_policies_arns = ["arn:aws:eks::aws:cluster-access-policy/AmazonEKSViewPolicy"]
@@ -25,6 +27,7 @@ locals {
       kubernetes_groups     = []
     }
   }
+
   policy_associations = merge([
     for name, config in local.roles : {
       for policy in config.cluster_policies_arns :
